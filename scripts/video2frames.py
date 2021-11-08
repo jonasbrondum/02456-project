@@ -22,7 +22,7 @@ def saveFrame(paths):
         while success:
 
             image = cv2.resize(image, dim)
-            filename = root + "vid"+str(i+1)+"f"+str(count)+".jpg"
+            filename = root + "frames/" + "vid"+str(i+1)+"f"+str(count)+".jpg"
             
             cv2.imwrite(filename, image)
             
