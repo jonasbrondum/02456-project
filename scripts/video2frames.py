@@ -14,6 +14,7 @@ def saveFrame(paths):
     for i in range(len(paths)):
         path = paths[i]
         vidObj = cv2.VideoCapture(path)
+        destination = root + "video" + str(i+1) + "/frames/"
 
         print("Saving video",i+1)
         success, image = vidObj.read()
@@ -22,7 +23,8 @@ def saveFrame(paths):
         while success:
 
             image = cv2.resize(image, dim)
-            filename = root + "frames/" + "vid"+str(i+1)+"f"+str(count)+".jpg"
+            idx = "%06d"%count
+            filename = destination + "frame_"+idx+".jpg"
             
             cv2.imwrite(filename, image)
             
