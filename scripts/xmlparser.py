@@ -10,6 +10,8 @@ def parse_annotation(ann_dir, img_dir, labels=[]):
     - seen_train_labels is the dictionary containing
             (key, value) = (the object class, the number of objects found in the images)
     '''
+    # This function iterates all annotation files for their contents using the ElementTree library 
+    # for XML-parsing.
     all_imgs = []
     seen_labels = {}
 
@@ -28,7 +30,7 @@ def parse_annotation(ann_dir, img_dir, labels=[]):
                 # print(path_to_image)
                 img['filename'] = elem.text[:-4]
                 ## make sure that the image exists:
-                
+                    
             if 'width' in elem.tag:
                 img['width'] = int(elem.text)
             if 'height' in elem.tag:
@@ -75,6 +77,8 @@ def img2txtfile(all_imgs):
     # Changing current path to the directory
     os.chdir('C:/Sync/Dokumenter/Universitet/Master/7_semester/02456_Deep_learning/project20/data/video2/boundingboxes/')
 
+    # Creates a text file with the same name as the png and then adds one line pr bounding box: 
+    # 'label xmin ymin xmax ymax\n'
     for frame in all_imgs:
         f = open(frame['filename'] + ".txt", "a")
         for can in frame['object']:
