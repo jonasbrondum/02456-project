@@ -75,7 +75,8 @@ def parse_annotation(ann_dir, img_dir, labels=[]):
 
 def img2txtfile(all_imgs):
     # Changing current path to the directory
-    os.chdir('C:/Sync/Dokumenter/Universitet/Master/7_semester/02456_Deep_learning/project20/data/video2/boundingboxes/')
+    cwd = os.getcwd()
+    os.chdir(cwd + '/data/video1/boundingboxes/')
 
     # Creates a text file with the same name as the png and then adds one line pr bounding box: 
     # 'label xmin ymin xmax ymax\n'
@@ -89,14 +90,18 @@ def img2txtfile(all_imgs):
 
 
 
-LABELS = ['beer','cola']
+LABELS = ['beer','cola','coke']
 
 
 
 ### The location where the VOC2012 data is saved.
-train_image_folder = 'C:/Sync/Dokumenter/Universitet/Master/7_semester/02456_Deep_learning/project20/data/video2/frames/'
+# Run script from root directory: (otherwise from scripts use os.chdir('..') first) 
+cwd = os.getcwd()
+frame_path = '/data/video1/frames/'
+annot_path = frame_path
+train_image_folder = cwd +  frame_path
 
-train_annot_folder = 'C:/Sync/Dokumenter/Universitet/Master/7_semester/02456_Deep_learning/project20/data/video2/frames/'
+train_annot_folder = cwd + frame_path
 
 
 
