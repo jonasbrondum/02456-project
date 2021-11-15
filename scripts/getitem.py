@@ -6,26 +6,27 @@ from PIL import Image
 
 
 class CansDataset(torch.utils.data.Dataset):
-    def __init__(self, root, transforms=None):
+    def __init__(self, root):
         self.root = root
-        #self.transforms = transforms
-        # TODO Correct these paths
-        self.imgs = list(sorted(os.listdir(os.path.join(root,"video1"))))
-        self.bbox = list(sorted(os.listdir(os.path.join(root,"video1/frames"))))
+        self.imgs = list(sorted(os.listdir(os.path.join(root,"video1/train2/images"))))
+        self.bbox = list(sorted(os.listdir(os.path.join(root,"video1/train2/boundingboxes"))))
     
     def __getitem__(self, idx):
         # load images and bboxes
-        img_path = os.path.join(self.root, "frames", self.imgs[idx])
-        bbox_path = os.path.join(self.root, "video1/frames", self.bbox[idx])
+        img_path = os.path.join(self.root, "video1/train2/images", self.imgs[idx])
+        bbox_path = os.path.join(self.root, "video1/train2/boundingboxes", self.bbox[idx])
         img = Image.open(img_path).convert("RGB")
-        num_objs = 2
+        print("img_path:",img_path)
+        print("bbox_path:",bbox_path)
+
 
         bbox = []
         label = []
         with open(bbox_path, 'r') as f:
             for line in f:
                 line = line.split(" ")
-                id = int(line[0]) # class label, 0=beer, 1=cola
+                id = line[0] # class label, 0=beer, 1=cola
+                id = 0 if id == 'beer' else 1
                 xmin = int(line[1])
                 ymin = int(line[2])
                 xmax = int(line[3])
@@ -50,4 +51,15 @@ class CansDataset(torch.utils.data.Dataset):
         return len(self.imgs)
 
 if __name__ == "__main__":
-    dataset = CansDataset('data/')
+    print(os.getcwd())
+    root = os.getcwd()+'/data/'
+    dataset = CansDataset(root)
+
+    #print(dataset.bbox)
+    #print(dataset.imgs)
+
+    img,target = dataset.__getitem__(907)
+    print("img",img)
+    print("target",target)
+
+
