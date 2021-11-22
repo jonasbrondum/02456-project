@@ -1,4 +1,5 @@
 # import the necessary packages
+from torch._C import device
 from torchvision.models import detection
 from imutils.video import VideoStream
 from imutils.video import FPS
@@ -9,17 +10,29 @@ import imutils
 import torch
 import time
 import cv2
+import os
+
+
+# SET NAME OF MODEL AND VIDEO YOU WANT TO USE FROM /models AND /data
+MODEL_NAME = "mobilenetv3_15epochs_entire_dataset.pth"
+VIDEO_NAME = "2021_10_28_12_49_00.avi"
+
 
 CONFIDENCE = 0.7
 DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 CLASSES = ['background','beer','cola']
 COLORS = np.random.uniform(0, 255, size=(len(CLASSES), 3))
-# PARSE YOUR MODEL HERE:
-MODEL_PATH = "/home/andreasgp/Downloads/model.pth"
-# PARSE YOUR VIDEO HERE: 
-VID_SOURCE = "/home/andreasgp/MEGAsync/DTU/9. Semester/Deep Learning/object-tracking-project/02456-project/data/2021_10_28_12_49_00.avi" # 0 is webcam
-model = torch.load(MODEL_PATH)
+
+MODEL_PATH = os.getcwd() + "/models/"
+VIDEO_PATH = os.getcwd() + "/data/"
+MODEL_SOURCE = MODEL_PATH + MODEL_NAME
+VID_SOURCE = VIDEO_PATH + VIDEO_NAME
+
+
+model = torch.load(MODEL_SOURCE)
+model = model.to(DEVICE)
 model.eval()
+print("Using",DEVICE)
 
 # initialize the video stream, allow the camera sensor to warmup,
 # and initialize the FPS counter

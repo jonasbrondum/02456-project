@@ -9,14 +9,23 @@ import imutils
 import torch
 import time
 import cv2
+import os
+
+
+# SET NAME OF MODEL YOU WANT TO USE FROM /models
+MODEL_NAME = "mobilenetv3_15epochs_entire_dataset.pth"
+
+
 
 CONFIDENCE = 0.7
 DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 CLASSES = ['background','beer','cola']
 COLORS = np.random.uniform(0, 255, size=(len(CLASSES), 3))
-# PARSE YOUR MODEL HERE:
-MODEL_PATH = "/home/andreasgp/Downloads/model.pth"
-model = torch.load(MODEL_PATH)
+
+MODEL_PATH = os.getcwd() + "/models/"
+
+MODEL_SOURCE = MODEL_PATH + MODEL_NAME
+model = torch.load(MODEL_SOURCE)
 model.eval()
 
 # initialize the video stream, allow the camera sensor to warmup,
