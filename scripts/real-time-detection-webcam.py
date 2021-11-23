@@ -10,11 +10,11 @@ import torch
 import time
 import cv2
 import os
-
-
+########################################################
+################## USER DEFINED INPUT ##################
 # SET NAME OF MODEL YOU WANT TO USE FROM /models
 MODEL_NAME = "mobilenetv3_15epochs_entire_dataset.pth"
-
+########################################################
 
 
 CONFIDENCE = 0.7

@@ -13,9 +13,12 @@ import cv2
 import os
 
 
+########################################################
+################## USER DEFINED INPUT ##################
 # SET NAME OF MODEL AND VIDEO YOU WANT TO USE FROM /models AND /data
 MODEL_NAME = "mobilenetv3_15epochs_entire_dataset.pth"
 VIDEO_NAME = "2021_10_28_12_49_00.avi"
+########################################################
 
 
 CONFIDENCE = 0.7
