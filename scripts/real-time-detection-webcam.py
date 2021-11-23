@@ -26,6 +26,7 @@ MODEL_PATH = os.getcwd() + "/models/"
 
 MODEL_SOURCE = MODEL_PATH + MODEL_NAME
 model = torch.load(MODEL_SOURCE)
+model = model.to(DEVICE)
 model.eval()
 
 # initialize the video stream, allow the camera sensor to warmup,
