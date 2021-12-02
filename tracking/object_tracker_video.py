@@ -17,9 +17,10 @@ COLORS = np.random.uniform(0, 255, size=(len(CLASSES), 3))
 # PARSE YOUR MODEL HERE:
 MODEL_PATH = "C:/Users/Philip/02456-project/models/mobilenetv3_15epochs_entire_dataset.pth"
 # PARSE YOUR VIDEO HERE: 
-VID_SOURCE = "C:/Users/Philip/02456-project/data/2021_10_28_12_49_00.avi" # 0 is webcam
-#VID_SOURCE = "C:/Users/Philip/02456-project/data/2021_10_28_12_47_19.avi" # 0 is webcam
+#VID_SOURCE = "C:/Users/Philip/02456-project/data/2021_10_28_12_49_00.avi" # 0 is webcam
+VID_SOURCE = "C:/Users/Philip/02456-project/data/2021_10_28_12_47_19.avi" # 0 is webcam
 model = torch.load(MODEL_PATH)#,map_location=torch.device('cpu'))
+model = model.to(DEVICE)
 model.eval()
 
 
@@ -86,10 +87,13 @@ while True:
 	
 	# loop over the tracked objects
     for (objectID, centroid) in objects.items():
-        text = "ID {}".format(objectID)
-        cv2.putText(orig, text, (centroid[0] - 10, centroid[1] - 10),
-			cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
-        cv2.circle(orig, (centroid[0], centroid[1]), 4, (0, 255, 0), -1)
+            text = "ID {}".format(objectID)
+            cv2.putText(orig, text, (centroid[0] - 10, centroid[1] - 10),
+			    cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
+            cv2.circle(orig, (centroid[0], centroid[1]), 4, (0, 255, 0), -1)
+
+
+    
 
 	
 

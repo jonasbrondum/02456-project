@@ -16,7 +16,8 @@ CLASSES = ['background','beer','cola']
 COLORS = np.random.uniform(0, 255, size=(len(CLASSES), 3))
 # PARSE YOUR MODEL HERE:
 MODEL_PATH = "C:/Users/Philip/02456-project/models/mobilenetv3_15epochs_entire_dataset.pth"
-model = torch.load(MODEL_PATH,map_location=torch.device('cpu'))
+model = torch.load(MODEL_PATH)#,map_location=torch.device('cpu'))
+model = model.to(DEVICE)
 model.eval()
 
 
