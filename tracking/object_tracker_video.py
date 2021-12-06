@@ -15,10 +15,10 @@ DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 CLASSES = ['background','beer','cola']
 COLORS = np.random.uniform(0, 255, size=(len(CLASSES), 3))
 # PARSE YOUR MODEL HERE:
-MODEL_PATH = "C:/Users/Philip/02456-project/models/mobilenetv3_15epochs_entire_dataset.pth"
+MODEL_PATH = "/home/andreasgp/MEGAsync/DTU/9. Semester/Deep Learning/object-tracking-project/02456-project/models/mobilenetv3_large_25_epochs.pth"
 # PARSE YOUR VIDEO HERE: 
 #VID_SOURCE = "C:/Users/Philip/02456-project/data/2021_10_28_12_49_00.avi" # 0 is webcam
-VID_SOURCE = "C:/Users/Philip/02456-project/data/2021_10_28_12_47_19.avi" # 0 is webcam
+VID_SOURCE = "/home/andreasgp/MEGAsync/DTU/9. Semester/Deep Learning/object-tracking-project/02456-project/data/2021_10_28_12_47_19.avi" # 0 is webcam
 model = torch.load(MODEL_PATH)#,map_location=torch.device('cpu'))
 model = model.to(DEVICE)
 model.eval()
@@ -39,6 +39,7 @@ while True:
 # grab the frame from the threaded video stream and resize it
 # to have a maximum width of 400 pixels
     ret, frame = vs.read()
+    timer = cv2.getTickCount()
     if frame is None:
         break
     frame = imutils.resize(frame, width=480)
@@ -96,7 +97,8 @@ while True:
     
 
 	
-
+    compute_time = cv2.getTickFrequency() / (cv2.getTickCount() - timer);
+    cv2.putText(orig, "FPS : " + str(int(compute_time)), (10,20), cv2.FONT_HERSHEY_SIMPLEX, 0.75, (0,0,255), 2);
     # show the output frame
     cv2.imshow("Frame", orig)
     key = cv2.waitKey(1) & 0xFF
