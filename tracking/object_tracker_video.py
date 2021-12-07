@@ -15,11 +15,12 @@ DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 CLASSES = ['background','beer','cola']
 COLORS = np.random.uniform(0, 255, size=(len(CLASSES), 3))
 # PARSE YOUR MODEL HERE:
-MODEL_PATH = "E:/Sync/Dokumenter/Universitet/Master/7_semester/02456_Deep_learning/02456-project/models/mobilenetv3_15epochs_entire_dataset.pth"
+MODEL_PATH = "E:/Sync/Dokumenter/Universitet/Master/7_semester/02456_Deep_learning/exp/yolo_v5s_640_480.pt"
 # PARSE YOUR VIDEO HERE:
 #VID_SOURCE = "C:/Users/Philip/02456-project/data/2021_10_28_12_49_00.avi" # 0 is webcam
 VID_SOURCE = "E:/Sync/Dokumenter/Universitet/Master/7_semester/02456_Deep_learning/02456-project/data/livevideo1.MP4" # 0 is webcam
-model = torch.load(MODEL_PATH,map_location=torch.device('cpu'))
+model = torch.hub.load('ultralytics/yolov5', 'custom', path=MODEL_PATH)
+# model = torch.load(MODEL_PATH,map_location=torch.device('cpu'))
 model = model.to(DEVICE)
 model.eval()
 
