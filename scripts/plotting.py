@@ -11,10 +11,11 @@ inferencetime = np.array([0.052, 0.05, 0.3238, 0.03])
 accuracy = np.array([65.3, 61.2, 86.1, 85.1])
 # Plotting point using sactter method
 plt.figure(figsize=(8,6))
-plt.scatter(inferencetime,accuracy,s=100,color="maroon")
+plt.scatter(inferencetime,accuracy,s=50,color="maroon")
 plt.grid()
+plt.xlim([0, 0.4])
 plt.xlabel("Inference time [s]")
-plt.ylabel("mean Averaged Precision [%]")
+plt.ylabel("mean Averaged Precision (mAP) [%]")
 plt.title("Accuracy vs inference time",fontsize=15)
 for i, label in enumerate(annotations):
     plt.annotate(label, (inferencetime[i], accuracy[i]))
