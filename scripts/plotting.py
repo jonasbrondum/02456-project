@@ -19,5 +19,5 @@ plt.ylabel("mean Averaged Precision (mAP) [%]")
 plt.title("Accuracy vs inference time",fontsize=15)
 for i, label in enumerate(annotations):
     plt.annotate(label, (inferencetime[i], accuracy[i]))
-plt.savefig('plots/accvsinf.png', pad_inches = 0.1)
+plt.savefig('plots/accvsinf.eps', pad_inches = 0.1)
 plt.show()
