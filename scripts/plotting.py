@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 # plt.style.use('_mpl-gallery')
 
 
-model=["MobileNetv3","MobileNetv3_320","ResNet50","YOLOv5"]
+model=["MobileNetv3","MobileNetv3_320","ResNet50","YOLOv5s"]
 # Creating a numpy array
 inferencetime = np.array([0.0874, 0.0495, 0.3238, 0.72])
 accuracy = np.array([87.4, 27.3, 86.1, 85.1])
