@@ -18,7 +18,7 @@ COLORS = np.random.uniform(0, 255, size=(len(CLASSES), 3))
 MODEL_PATH = "E:/Sync/Dokumenter/Universitet/Master/7_semester/02456_Deep_learning/resnet50_10epoch_entire_dataset.pth"
 # PARSE YOUR VIDEO HERE:
 #VID_SOURCE = "C:/Users/Philip/02456-project/data/2021_10_28_12_49_00.avi" # 0 is webcam
-VID_SOURCE = "E:/Sync/Dokumenter/Universitet/Master/7_semester/02456_Deep_learning/02456-project/data/livevideo1.MOV" # 0 is webcam
+VID_SOURCE = "E:/Sync/Dokumenter/Universitet/Master/7_semester/02456_Deep_learning/02456-project/data/livevideo1.MP4" # 0 is webcam
 model = torch.load(MODEL_PATH,map_location=torch.device('cpu'))
 model = model.to(DEVICE)
 model.eval()
@@ -33,6 +33,8 @@ vs = cv2.VideoCapture(VID_SOURCE)
 #vs = VideoStream(src=0).start()
 time.sleep(2.0)
 fps = FPS().start()
+fpsMax = 0
+fpsMin = 1
 
 # loop over the frames from the video stream
 while True:
@@ -56,7 +58,8 @@ while True:
     # send the input to the device and pass the it through the
     # network to get the detections and predictions
     frame = frame.to(DEVICE)
-    detections = model(frame)[0]
+    with torch.no_grad():
+        detections = model(frame)[0]
     rects = []
 
     # loop over the detections
@@ -98,7 +101,11 @@ while True:
 
 
     compute_time = cv2.getTickFrequency() / (cv2.getTickCount() - timer);
-    cv2.putText(orig, "FPS : " + str(int(compute_time)), (10,20), cv2.FONT_HERSHEY_SIMPLEX, 0.75, (0,0,255), 2);
+    if compute_time > fpsMax:
+        fpsMax = compute_time
+    elif compute_time < fpsMin:
+        fpsMin = compute_time
+    cv2.putText(orig, "FPS : " + str(float(compute_time)), (10,20), cv2.FONT_HERSHEY_SIMPLEX, 0.75, (0,0,255), 2);
     # show the output frame
     cv2.imshow("Frame", orig)
     key = cv2.waitKey(1) & 0xFF
@@ -112,5 +119,6 @@ while True:
 fps.stop()
 print("[INFO] elapsed time: {:.2f}".format(fps.elapsed()))
 print("[INFO] approx. FPS: {:.2f}".format(fps.fps()))
+print("[INFO] interval FPS: [{:.2f} - {:.2f}]".format(fpsMin, fpsMax))
 # do a bit of cleanup
 cv2.destroyAllWindows()
