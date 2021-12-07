@@ -15,11 +15,11 @@ DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 CLASSES = ['background','beer','cola']
 COLORS = np.random.uniform(0, 255, size=(len(CLASSES), 3))
 # PARSE YOUR MODEL HERE:
-MODEL_PATH = "/home/andreasgp/MEGAsync/DTU/9. Semester/Deep Learning/object-tracking-project/02456-project/models/mobilenetv3_large_25_epochs.pth"
-# PARSE YOUR VIDEO HERE: 
+MODEL_PATH = "E:/Sync/Dokumenter/Universitet/Master/7_semester/02456_Deep_learning/resnet50_10epoch_entire_dataset.pth"
+# PARSE YOUR VIDEO HERE:
 #VID_SOURCE = "C:/Users/Philip/02456-project/data/2021_10_28_12_49_00.avi" # 0 is webcam
-VID_SOURCE = "/home/andreasgp/MEGAsync/DTU/9. Semester/Deep Learning/object-tracking-project/02456-project/data/2021_10_28_12_47_19.avi" # 0 is webcam
-model = torch.load(MODEL_PATH)#,map_location=torch.device('cpu'))
+VID_SOURCE = "E:/Sync/Dokumenter/Universitet/Master/7_semester/02456_Deep_learning/02456-project/data/livevideo1.MOV" # 0 is webcam
+model = torch.load(MODEL_PATH,map_location=torch.device('cpu'))
 model = model.to(DEVICE)
 model.eval()
 
@@ -57,7 +57,7 @@ while True:
     # network to get the detections and predictions
     frame = frame.to(DEVICE)
     detections = model(frame)[0]
-    rects = []	
+    rects = []
 
     # loop over the detections
     for i in range(0, len(detections["boxes"])):
@@ -85,7 +85,7 @@ while True:
 	# update our centroid tracker using the computed set of bounding
 	# box rectangles
     objects = ct.update(rects)
-	
+
 	# loop over the tracked objects
     for (objectID, centroid) in objects.items():
             text = "ID {}".format(objectID)
@@ -94,9 +94,9 @@ while True:
             cv2.circle(orig, (centroid[0], centroid[1]), 4, (0, 255, 0), -1)
 
 
-    
 
-	
+
+
     compute_time = cv2.getTickFrequency() / (cv2.getTickCount() - timer);
     cv2.putText(orig, "FPS : " + str(int(compute_time)), (10,20), cv2.FONT_HERSHEY_SIMPLEX, 0.75, (0,0,255), 2);
     # show the output frame
@@ -107,7 +107,7 @@ while True:
         break
     # update the FPS counter
     fps.update()
-    
+
 # stop the timer and display FPS information
 fps.stop()
 print("[INFO] elapsed time: {:.2f}".format(fps.elapsed()))
