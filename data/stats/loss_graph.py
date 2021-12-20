@@ -47,7 +47,7 @@ for i, (modelacc, modelloss) in enumerate(zip(acc, losses)):
     axs[1].grid(True)
 
 axs[1].set_xlabel("Epoch", fontsize = 14)
-fig.suptitle("Training results for 10 epochs",fontsize=15)
+fig.suptitle("Training results for 10 epochs with R-CNN",fontsize=15)
 # plt.legend(artists)
 plt.savefig('trainingaccloss.png', pad_inches = 0.1)
 
