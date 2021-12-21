@@ -24,12 +24,12 @@ acc = np.array(acc)*100
 epoch = np.array(epoch)
 
 fig, axs = plt.subplots(2,1)
-axs[0].plot(epoch, acc, 'maroon')
+axs[0].plot(epoch, acc, 'darkmagenta')
 axs[0].set_ylabel("mean Averaged Precision\n (mAP) [%]", fontsize = 10)
 axs[0].grid(True)
 
 
-axs[1].plot(epoch, losses, 'maroon')
+axs[1].plot(epoch, losses, 'darkmagenta')
 axs[1].set_ylabel("Training loss", fontsize = 10)
 axs[1].grid(True)
 
